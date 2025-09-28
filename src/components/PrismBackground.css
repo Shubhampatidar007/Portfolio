@@ -1,0 +1,165 @@
+/* AnimatedStarfield.css
+   Dark atmosphere starfield with layered parallax + twinkle + shooting star.
+   Designed to be subtle and not interfere with UI.
+*/
+
+/* Tunables */
+:root{
+  --bg-fallback: #060607;
+  --nebula-left: rgba(120, 24, 72, 0.14);   /* purple */
+  --nebula-right: rgba(40, 160, 170, 0.10); /* teal */
+  --nebula-center: rgba(255, 190, 60, 0.08);/* warm glow */
+
+  --star-glow: rgba(255,255,255,0.14);
+  --star-speed-a: 70s; /* far away drift */
+  --star-speed-b: 48s; /* mid */
+  --star-speed-c: 26s; /* near */
+  --shoot-duration: 2.2s; /* shooting star */
+}
+
+/* container sits full viewport behind UI */
+.starfield-bg{
+  position: fixed;
+  inset: 0;
+  z-index: 0;               /* ensure .site-root is above this (z-index >=1) */
+  pointer-events: none;
+  overflow: hidden;
+  background: radial-gradient(1200px 400px at 10% 10%, rgba(255,255,255,0.01), transparent),
+              linear-gradient(180deg, rgba(6,7,7,1), rgba(2,2,3,1));
+  isolation: isolate;
+}
+
+/* Nebula blobs */
+.nebula{
+  position: absolute;
+  width: 70vmax;
+  height: 70vmax;
+  border-radius: 50%;
+  filter: blur(64px);
+  mix-blend-mode: screen;
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+.nebula-left{
+  left: -12%;
+  top: -8%;
+  background: radial-gradient(circle at 30% 30%, var(--nebula-left), rgba(0,0,0,0) 50%);
+  animation: neb-move-left 42s ease-in-out infinite;
+}
+.nebula-right{
+  right: -14%;
+  top: 6%;
+  background: radial-gradient(circle at 70% 30%, var(--nebula-right), rgba(0,0,0,0) 48%);
+  animation: neb-move-right 56s ease-in-out infinite;
+}
+.nebula-center{
+  left: 14%;
+  bottom: -20%;
+  width: 90vmax;
+  height: 90vmax;
+  filter: blur(88px);
+  background: radial-gradient(circle at 50% 40%, var(--nebula-center), rgba(0,0,0,0) 52%);
+  animation: neb-move-center 60s ease-in-out infinite;
+}
+
+/* Star layers container (absolute full) */
+.star-layer{
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+/* individual star dot */
+.star {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 6px var(--star-glow), 0 0 12px rgba(255,255,255,0.02);
+  transform: translate3d(0,0,0);
+  /* twinkle animation (opacity + scale) */
+  animation-name: star-twinkle;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+/* brighter near stars */
+.star.bright {
+  box-shadow: 0 0 8px rgba(255,255,255,0.22), 0 0 20px rgba(255,220,180,0.02);
+}
+
+/* Layer horizontal drift for parallax illusion */
+.layer-a { animation: layer-drift var(--star-speed-a) linear infinite; }
+.layer-b { animation: layer-drift var(--star-speed-b) linear infinite reverse; }
+.layer-c { animation: layer-drift var(--star-speed-c) linear infinite; }
+
+/* twinkle keyframes */
+@keyframes star-twinkle {
+  0% { opacity: 0.8; transform: scale(1); filter: blur(0px); }
+  25% { opacity: 0.35; transform: scale(0.86); }
+  50% { opacity: 1.0; transform: scale(1.08); }
+  75% { opacity: 0.5; transform: scale(0.92); }
+  100% { opacity: 0.8; transform: scale(1); }
+}
+
+/* layer drift: slight horizontal translation (very slow) */
+@keyframes layer-drift {
+  0% { transform: translateX(-2%); }
+  50% { transform: translateX(2%); }
+  100% { transform: translateX(-2%); }
+}
+
+/* Shooting star animation — single element sweeps across occasionally */
+.shooting-star {
+  position: absolute;
+  top: 14%;
+  left: -10%;
+  width: 3px;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0.2));
+  box-shadow: 0 0 8px rgba(255,255,255,0.9), 20px 0 40px rgba(255,255,255,0.12);
+  transform: rotate(-22deg) translate3d(0,0,0);
+  opacity: 0;
+  pointer-events: none;
+  /* trigger via animation using steps + delay to be occasional */
+  animation: shoot 12s linear infinite;
+  animation-delay: 3s;
+}
+
+/* shooting star keyframes — visible then travel across */
+@keyframes shoot {
+  0% { opacity: 0; transform: translate3d(-6vw, 0, 0) rotate(-22deg) scaleX(1); }
+  8% { opacity: 1; transform: translate3d(10vw, 6vh, 0) rotate(-22deg) scaleX(1.2); }
+  24% { opacity: 0.9; transform: translate3d(45vw, 24vh, 0) rotate(-22deg) scaleX(1.6); }
+  30% { opacity: 0; transform: translate3d(65vw, 40vh, 0) rotate(-22deg) scaleX(1.8); }
+  100% { opacity: 0; transform: translate3d(65vw, 40vh, 0) rotate(-22deg) scaleX(1.8); }
+}
+
+/* grain overlay for subtle texture */
+.star-grain{
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 8px 8px;
+  opacity: 0.03;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+/* reduce animation / motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .nebula,
+  .layer-a, .layer-b, .layer-c,
+  .shooting-star {
+    animation: none !important;
+  }
+  .star { animation: none !important; opacity: 0.85 !important; }
+}
+
+/* responsiveness: restrain nebula blur on small screens */
+@media (max-width: 880px) {
+  .nebula { filter: blur(46px); }
+  .nebula-center { filter: blur(60px); }
+  .star-grain { opacity: 0.02; }
+  :root { --star-speed-a: 100s; --star-speed-b: 80s; --star-speed-c: 40s; }
+}

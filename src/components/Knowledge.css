@@ -1,0 +1,320 @@
+/* Knowledge.css - Progress & Projects (glass/dark theme)
+   Updated to render the percentage and label BELOW the spinner, and make the arc grow from the bottom.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root{
+  --bg: #070708;
+  --card: rgba(255,255,255,0.04);
+  --glass-border: rgba(255,255,255,0.06);
+  --muted: #9aa0a6;
+  --accent: rgba(255,209,102,0.95);
+  --accent2: rgba(255,120,180,0.95);
+  --glass-blur: 10px;
+  --card-radius: 16px;
+  --transition: 260ms cubic-bezier(.2,.9,.2,1);
+  --shadow: 0 8px 30px rgba(2,6,8,0.65);
+}
+
+/* Base */
+*{ box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; padding: 0; background: radial-gradient(1200px 400px at 10% 10%, rgba(255,255,255,0.02), transparent), linear-gradient(180deg,#060607 0%, #0b0c0d 100%); color: #e8eef2; font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+
+.pp-page{
+  width: 100%;
+  max-width: 1150px;
+  margin: 36px auto;
+  padding: 22px;
+}
+
+.glass{
+  background: var(--card);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+/* Header / Hero */
+.pp-hero{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 28px;
+  margin-bottom: 22px;
+  text-align: left;
+}
+.pp-title{ font-size: 28px; margin: 0; letter-spacing: 0.4px; font-weight: 700; }
+.pp-sub{ margin:0; color: var(--muted); font-size: 14px; }
+
+/* Skills section */
+.pp-skills{ margin-bottom: 20px; padding: 20px; }
+.section-heading{ font-size: 16px; margin: 0 0 14px 0; font-weight: 600; color: #f5f7f8; }
+
+/* Skills grid - supports active item spanning 2 columns on wide screens */
+.skills-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+/* Skill box */
+.skill-box{
+  border-radius: 12px;
+  transition: transform var(--transition), box-shadow var(--transition), grid-column 320ms ease;
+  background: linear-gradient(180deg, rgba(255,255,255,0.018), rgba(0,0,0,0.06));
+  border: 1px solid rgba(255,255,255,0.02);
+  padding: 14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor: pointer;
+  position: relative;
+  overflow: visible;
+}
+
+/* When active on wide screens, span more space */
+@media (min-width: 860px){
+  .skill-box.active{
+    grid-column: span 2;
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 22px 54px rgba(0,0,0,0.7), 0 0 20px rgba(255,209,102,0.03);
+  }
+}
+
+/* On small screens, active card becomes full width but no disruptive layout */
+@media (max-width: 860px){
+  .skill-box.active{
+    transform: translateY(-3px) scale(1.01);
+  }
+}
+
+.skill-inner{ display:flex; align-items:center; gap:12px; flex-direction: column; text-align:center; width:100%; }
+.skill-icon{
+  width:48px; height:48px; display:inline-flex; align-items:center; justify-content:center;
+  border-radius: 50%;
+  font-size: 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+  color: #fff;
+}
+.skill-label{ font-size: 13px; color: var(--muted); margin-top: 8px; }
+
+/* Hidden details area revealed when active */
+.skill-details{
+  width: 100%;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 420ms ease, opacity 320ms ease, transform 320ms var(--transition);
+  overflow: hidden;
+  margin-top: 10px;
+  transform: translateY(8px);
+  display:flex;
+  justify-content:center;
+}
+.skill-details.show{
+  max-height: 200px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* layout inside details */
+.details-row{
+  display:flex;
+  gap: 18px;
+  align-items:center;
+  justify-content:center;
+  width: 100%;
+  padding: 10px;
+}
+.details-count{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+}
+.count-num{
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+.count-label{
+  font-size: 12px;
+  color: var(--muted);
+}
+.details-exp{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.exp-label{ font-size: 12px; color: var(--muted); }
+.exp-value{ font-size: 14px; color: #fff; font-weight: 600; }
+
+/* Hover */
+.skill-box:hover{ transform: translateY(-6px) scale(1.02); box-shadow: 0 18px 40px rgba(0,0,0,0.6), 0 0 18px rgba(255,209,102,0.04); }
+
+/* More button */
+.more-row{ display:flex; justify-content:center; margin-top: 16px; }
+.more-btn{
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+  border: 1px solid rgba(255,255,255,0.03);
+  color: #fff;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  transition: transform var(--transition);
+}
+.more-btn .chev{ transition: transform var(--transition); }
+.more-btn.active{ transform: translateY(-3px); }
+.more-btn.active .chev{ transform: rotate(180deg); }
+
+/* Progress area - hidden by default */
+.progress-area{
+  margin-top: 18px;
+  overflow: hidden;
+  max-height: 800px;
+  opacity: 0;
+  transition: max-height 420ms ease, opacity 320ms ease;
+  display:flex;
+  justify-content:center;
+}
+.progress-area.visible{
+  max-height: 800px;
+  opacity: 1;
+}
+
+/* spinners layout */
+.spinners{ display:flex; gap: 40px; justify-content:center; align-items:center; flex-wrap:wrap; padding: 18px 8px; transform: translateY(6px); opacity: 0; transition: transform 420ms var(--transition), opacity 420ms var(--transition); }
+.spinners.entered{ transform: translateY(0); opacity: 1; }
+
+/* ---------------------------
+   Spinner: arc starts at bottom
+   percent + label sit below the ring
+   --------------------------- */
+.pp-spinner{
+  width: 200px;              /* outer container */
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start; /* svg on top, meta below */
+  transition: transform 320ms var(--transition), box-shadow var(--transition), opacity 320ms var(--transition);
+  opacity: 0;
+  transform: translateY(14px);
+  padding-top: 10px;
+}
+.pp-spinner.pp-show{ opacity: 1; transform: translateY(0); }
+
+.pp-svg{
+  width: 160px;
+  height: 160px;
+  display:block;
+}
+
+/* background ring */
+.bg-circle{
+  fill: none;
+  stroke: rgba(255,255,255,0.03);
+  stroke-width: 10;
+}
+
+/* rotate the progress circle so its start point is at the bottom.
+   transform-origin must match the svg center (70,70) for viewBox 140x140 */
+.progress-circle{
+  transform: rotate(90deg);
+  transform-origin: 70px 70px;
+}
+
+/* meta block placed *below* the svg (so text sits under the ring) */
+.pp-meta{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.percent-value{
+  font-weight: 700;
+  font-size: 20px;
+  color: #fff;
+  line-height: 1;
+}
+
+.pp-label{
+  font-size: 13px;
+  color: var(--muted);
+  text-align:center;
+  max-width: 160px;
+}
+
+/* Projects grid */
+.pp-projects{ margin-top: 22px; padding: 18px; }
+.projects-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.project-card{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.07));
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  border: 1px solid rgba(255,255,255,0.02);
+}
+.project-card:hover{
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.65), 0 0 20px rgba(255,120,180,0.03);
+  border-color: rgba(255,255,255,0.04);
+}
+
+.project-title{ font-size: 15px; margin:0; }
+.project-tag{ font-size: 12px; color: var(--muted); margin-top:6px; display:block; }
+
+.project-actions .icon-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  width:44px; height:44px; border-radius: 10px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.06), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.02);
+  color: #fff;
+  text-decoration: none;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.project-actions .icon-btn:hover{ transform: translateY(-6px); box-shadow: 0 14px 36px rgba(0,0,0,0.6); }
+.project-actions .ext{ margin-left: 6px; opacity: 0.9; font-size: 12px; }
+
+/* Footer area */
+.pp-footer{ margin-top: 22px; display:flex; justify-content:center; }
+.pp-footer-inner{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding: 12px 18px; width:100%; }
+.pp-footer-links a{ color: var(--muted); margin-left: 12px; text-decoration:none; }
+
+/* Responsive adjustments */
+@media (max-width: 880px){
+  .pp-page{ padding: 18px; margin: 18px auto; }
+  .skills-grid{ grid-template-columns: repeat(auto-fit,minmax(140px, 1fr)); }
+  .pp-hero{ text-align: center; }
+  .more-row{ margin-top: 12px; }
+  .spinners{ gap: 12px; }
+  .pp-spinner{ width: 160px; }
+  .pp-svg{ width: 130px; height: 130px; }
+  .percent-value{ font-size: 18px; }
+  .details-row{ flex-direction: column; gap: 8px; }
+  .pp-meta{ margin-top: 6px; }
+}
+
+@media (max-width: 480px){
+  .spinners{ flex-direction: column; padding: 12px; }
+  .projects-grid{ grid-template-columns: 1fr; }
+  .skill-box{ padding: 12px; }
+  .pp-spinner{ width: 140px; }
+  .pp-svg{ width: 120px; height: 120px; }
+  .percent-value{ font-size: 16px; }
+}

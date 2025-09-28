@@ -1,0 +1,175 @@
+/* Footer.css — harmonized with Hero.box style
+   Outer wrapper transparent; inner .vibe-container matches .hero-box
+*/
+
+/* Use the same variables as Hero so the boxes match */
+:root {
+  --box-bg-1: rgba(10, 11, 13, 0.92);
+  --box-bg-2: rgba(35, 37, 40, 0.92);
+  --accent: #ff6b8a;
+  --muted: #bcc3c9;
+
+  --panel-radius: 18px;
+  --panel-padding-v: 22px;
+  --panel-padding-h: 28px;
+
+  --glass-border: rgba(255, 255, 255, 0.03);
+  --panel-shadow: 0 20px 50px rgba(2, 6, 23, 0.6);
+  --panel-inset: inset 0 -2px 12px rgba(255,255,255,0.02);
+
+  --text: #ffffff;
+}
+
+/* OUTER wrapper: transparent so starfield shows through */
+.vibe-footer {
+  position: relative;
+  z-index: 3;                /* keep above background */
+  padding: 40px 24px 20px;
+  color: var(--text);
+  background: transparent;   /* critical: let the background show through */
+  box-shadow: none;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* INNER rounded container (matches hero-box) */
+.vibe-container {
+  max-width: 1150px;
+  margin: 0 auto;
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+
+  /* exactly like hero-box */
+  background: linear-gradient(180deg, var(--box-bg-1), var(--box-bg-2));
+  border-radius: var(--panel-radius);
+  padding: var(--panel-padding-v) var(--panel-padding-h);
+  box-shadow: var(--panel-shadow), var(--panel-inset);
+  border: 1px solid var(--glass-border);
+
+  /* frosted blur to blend with starfield */
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+
+  /* fine texture to match hero */
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(255,255,255,0.01), transparent 12%),
+    radial-gradient(circle at 90% 80%, rgba(0,0,0,0.06), transparent 18%);
+}
+
+/* Layout columns */
+.vibe-left, .vibe-middle, .vibe-right {
+  flex: 1;
+  min-width: 220px;
+}
+.vibe-left { max-width: 380px; }
+
+/* Headings & text */
+.vibe-title {
+  font-size: 18px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: #fff;
+}
+.vibe-desc {
+  color: var(--muted);
+  margin: 0 0 18px;
+  line-height: 1.45;
+  max-width: 420px;
+}
+
+/* Social icons (match hero pill style) */
+.vibe-social { display: flex; gap: 12px; margin-top: 6px; }
+.icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 6px 30px rgba(0,0,0,0.55);
+  transition: transform .16s ease, box-shadow .16s ease;
+  color: #fff;
+  font-size: 18px;
+}
+.icon:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 34px rgba(0,0,0,0.6);
+}
+
+/* Middle & right headings */
+.vibe-middle h4, .vibe-right h4 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  color: #fff;
+}
+
+/* Contact list — use hero skill row look */
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: var(--muted);
+}
+.contact-list li {
+  background: rgba(255,255,255,0.06);           /* same as hero-skills look */
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 500;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.li-icon { font-size: 16px; color: var(--accent); }
+.contact-list a { color: #e6eef3; text-decoration: none; }
+.contact-list a:hover { text-decoration: underline; }
+
+/* CTA buttons — match hero pill style */
+.more-text { color: var(--muted); margin-bottom: 14px; }
+.vibe-cta { display:flex; gap: 12px; }
+.btn {
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.04);
+  padding: 10px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn.ghost {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.03);
+  opacity: .95;
+  padding: 8px 14px;
+}
+
+/* bottom copyright row (keep transparent background) */
+.vibe-bottom {
+  max-width: 1150px;
+  margin: 18px auto 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Responsive — mirror hero's responsive choices */
+@media (max-width: 880px) {
+  .vibe-container { flex-direction: column; padding: 16px; gap: 12px; }
+  .icon { width: 44px; height: 44px; }
+  .vibe-left { max-width: none; }
+}
+@media (max-width: 480px) {
+  .vibe-footer { padding: 28px 12px 16px; }
+  .vibe-title { font-size: 15px; }
+  .vibe-desc { font-size: 13px; max-width: 100%; }
+}

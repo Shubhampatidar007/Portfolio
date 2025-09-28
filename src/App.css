@@ -1,0 +1,6 @@
+.site-root {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  background: transparent;
+}
