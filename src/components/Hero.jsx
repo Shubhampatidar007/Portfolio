@@ -1,6 +1,6 @@
 import React from "react";
 import "./Hero.css";
-import userImg from "../img/user.png";
+import userImg from "../img/user1.png";
 export default function Hero({
   name = "Shubh!",
   title = "Driven Undergraduate exploring A.I",
