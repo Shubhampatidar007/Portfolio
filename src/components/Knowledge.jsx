@@ -12,7 +12,6 @@ import {
 import { SiC } from "react-icons/si";
 import "./Knowledge.css";
 
-/* ---------- Data ---------- */
 const skills = [
   {
     id: "html",
