@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Shubhampatidar007/Portfolio/static/css/main.3a871d49.css",
+    "main.js": "/Shubhampatidar007/Portfolio/static/js/main.56f53ed4.js",
+    "static/media/user.png": "/Shubhampatidar007/Portfolio/static/media/user.fa37a4e798b92b6b5452.png",
+    "static/media/user1.jpg": "/Shubhampatidar007/Portfolio/static/media/user1.4e1994ffde9ca5195917.jpg",
+    "index.html": "/Shubhampatidar007/Portfolio/index.html",
+    "main.3a871d49.css.map": "/Shubhampatidar007/Portfolio/static/css/main.3a871d49.css.map",
+    "main.56f53ed4.js.map": "/Shubhampatidar007/Portfolio/static/js/main.56f53ed4.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3a871d49.css",
+    "static/js/main.56f53ed4.js"
+  ]
+}
