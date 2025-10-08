@@ -13,34 +13,10 @@ import { SiC } from "react-icons/si";
 import "./Knowledge.css";
 
 const skills = [
-  {
-    id: "html",
-    label: "HTML",
-    Icon: FaHtml5,
-    projects: 50+,
-    experience: "1 yrs",
-  },
-  {
-    id: "css",
-    label: "CSS",
-    Icon: FaCss3Alt,
-    projects: 50+,
-    experience: "1 yrs",
-  },
-  {
-    id: "js",
-    label: "JavaScript",
-    Icon: FaJs,
-    projects: 50+,
-    experience: "1 yrs",
-  },
-  {
-    id: "python",
-    label: "Python",
-    Icon: FaPython,
-    projects: 0,
-    experience: "0 yr",
-  },
+  { id: "html", label: "HTML", Icon: FaHtml5, projects: 50, experience: "1 yr" },
+  { id: "css", label: "CSS", Icon: FaCss3Alt, projects: 50, experience: "1 yr" },
+  { id: "js", label: "JavaScript", Icon: FaJs, projects: 50, experience: "1 yr" },
+  { id: "python", label: "Python", Icon: FaPython, projects: 0, experience: "0 yr" },
   { id: "c", label: "C", Icon: SiC, projects: 2, experience: "6 months" },
 ];
 
@@ -53,27 +29,32 @@ const progressItems = [
 const projects = [
   {
     id: 1,
-    title: "Soon upload",
-    tag: "---",
-    github: "https://github.com/yourname/portfolio",
+    title: "The Text Editor",
+    tag: "React",
+    github: "https://shubhampatidar007.github.io/The-Edit/",
+    description:
+      "It can change font to capital, capitalize, uppercase, lowercase, counting",
   },
   {
-     id: 2,
-    title: "Soon upload",
-    tag: "---",
-    github: "https://github.com/yourname/portfolio",
+    id: 2,
+    title: "Accept Me",
+    tag: "Fun Project",
+    github: "https://shubhampatidar007.github.io/AcceptMe/",
+    description: "This is for fun purpose",
   },
   {
-   id: 3,
-    title: "Soon upload",
+    id: 3,
+    title: "Coming Soon",
     tag: "---",
-    github: "https://github.com/yourname/portfolio",
+    github: "#",
+    description: "Project will be uploaded soon",
   },
   {
-   id: 4,
-    title: "Soon upload",
+    id: 4,
+    title: "Coming Soon",
     tag: "---",
-    github: "https://github.com/yourname/portfolio",
+    github: "#",
+    description: "Project will be uploaded soon",
   },
 ];
 
@@ -87,7 +68,6 @@ function useAnimateProgress(containerRef, target, enabled) {
     const valueNode = node.querySelector(".percent-value");
     if (!circle || !valueNode) return;
 
-    // read radius from DOM (keeps JS & CSS in sync)
     const radius = circle.r.baseVal.value;
     const circumference = 2 * Math.PI * radius;
 
@@ -115,16 +95,10 @@ function useAnimateProgress(containerRef, target, enabled) {
   }, [containerRef, target, enabled]);
 }
 
-/* ---------- Circular spinner component ----------
-   - SVG viewBox 0 0 140 140 (center 70,70 radius 50)
-   - CSS rotates the progress-circle so the arc grows FROM the bottom.
-   - percent + label are rendered as sibling block below the SVG (so they're outside the ring).
-*/
+/* ---------- Circular spinner component ---------- */
 const CircularProgress = ({ value = 0, label, appear }) => {
   const containerRef = useRef(null);
-  const gradientIdRef = useRef(
-    `grad-${Math.random().toString(36).slice(2, 9)}`
-  );
+  const gradientIdRef = useRef(`grad-${Math.random().toString(36).slice(2, 9)}`);
 
   useAnimateProgress(containerRef, value, appear);
 
@@ -147,7 +121,6 @@ const CircularProgress = ({ value = 0, label, appear }) => {
           </linearGradient>
         </defs>
 
-        {/* center 70, radius 50, stroke 10 (matches Knowledge.css) */}
         <circle className="bg-circle" cx="70" cy="70" r="50" />
         <circle
           className="progress-circle"
@@ -161,7 +134,6 @@ const CircularProgress = ({ value = 0, label, appear }) => {
         />
       </svg>
 
-      {/* meta block placed under the ring to avoid overlap */}
       <div className="pp-meta">
         <div className="percent-value">0%</div>
         <div className="pp-label">{label}</div>
@@ -170,12 +142,11 @@ const CircularProgress = ({ value = 0, label, appear }) => {
   );
 };
 
-/* ---------- Main Knowledge component (skills / progress / projects) ---------- */
+/* ---------- Main Knowledge component ---------- */
 export default function Knowledge() {
   const [showProgress, setShowProgress] = useState(false);
   const [spinnersAppear, setSpinnersAppear] = useState(false);
 
-  // active skill state (for click-to-expand)
   const [activeSkill, setActiveSkill] = useState(null);
   const [skillCount, setSkillCount] = useState(0);
   const prevActiveRef = useRef(null);
@@ -189,7 +160,6 @@ export default function Knowledge() {
     }
   }, [showProgress]);
 
-  // animate skill project counter when activated
   useEffect(() => {
     if (!activeSkill) {
       setSkillCount(0);
@@ -268,9 +238,7 @@ export default function Knowledge() {
                   >
                     <div className="details-row">
                       <div className="details-count">
-                        <div className="count-num">
-                          {isActive ? skillCount : 0}
-                        </div>
+                        <div className="count-num">{isActive ? skillCount : 0}</div>
                         <div className="count-label">Projects</div>
                       </div>
                       <div className="details-exp">
@@ -330,18 +298,23 @@ export default function Knowledge() {
               <div className="project-content">
                 <h4 className="project-title">{pr.title}</h4>
                 <span className="project-tag">{pr.tag}</span>
+                {pr.description && <p className="project-desc">{pr.description}</p>}
               </div>
               <div className="project-actions">
-                <a
-                  className="icon-btn"
-                  href={pr.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Open ${pr.title} on GitHub`}
-                >
-                  <FaGithub />
-                  <FaExternalLinkAlt className="ext" />
-                </a>
+                {pr.github && pr.github !== "#" ? (
+                  <a
+                    className="icon-btn"
+                    href={pr.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Open ${pr.title} on GitHub`}
+                  >
+                    <FaGithub />
+                    <FaExternalLinkAlt className="ext" />
+                  </a>
+                ) : (
+                  <span className="coming-soon">Coming Soon</span>
+                )}
               </div>
             </article>
           ))}
@@ -353,7 +326,7 @@ export default function Knowledge() {
           <div>Made with ❤️ — contact me on GitHub</div>
           <div className="pp-footer-links">
             <a
-              href="https://github.com/yourname"
+              href="https://github.com/shubhampatidar007"
               target="_blank"
               rel="noopener noreferrer"
             >
