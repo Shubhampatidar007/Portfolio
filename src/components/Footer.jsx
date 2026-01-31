@@ -11,12 +11,12 @@ import {
 import "./Footer.css";
 
 const Footer = ({
-  whatsappNumber = "+919876543210",
-  instagram = "https://instagram.com/yourhandle",
-  linkedin = "https://linkedin.com/in/yourhandle",
-  github = "https://github.com/yourhandle",
-  email = "youremail@gmail.com",
-  location = "City, Country",
+  whatsappNumber = "NO--",
+  instagram = "https://instagram.com/vibeswithshubh",
+  linkedin = "www.linkedin.com/in/shubham-patidar-87b6b9381",
+  github = "https://github.com/shubhampatidar007",
+  email = "shubhampatidar007@gmail.com",
+  location = "Mandsaur, India (In) ",
 }) => {
   // sanitize number to digits only for wa.me links
   const cleanNumber = (whatsappNumber || "").replace(/\D/g, "");
