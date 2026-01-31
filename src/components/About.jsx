@@ -100,18 +100,18 @@ export default function About() {
 
           <div className="socials">
             <a
-              href="https://github.com/yourname"
+              href="https://github.com/Shubhampatidar007"
               rel="noopener noreferrer"
               target="_blank"
               aria-label="GitHub"
             >
               <FaGithub />
             </a>
-            <a href="mailto:youremail@gmail.com" aria-label="Email">
+            <a href="Shubhampatidar7851@gmail.com" aria-label="Email">
               <FaEnvelope />
             </a>
             <a
-              href="https://www.linkedin.com/in/yourname"
+              href="https://www.linkedin.com/in/shubham-patidar-87b6b9381/"
               rel="noopener noreferrer"
               target="_blank"
               aria-label="LinkedIn"
